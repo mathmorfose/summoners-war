@@ -37,5 +37,3 @@ class MainAttribute:
         else:
             name = self.name.split("+")[0]
             return f"{name} +{self.value}"
-
-        return f"{self.name}{self.value}"
