@@ -68,9 +68,8 @@ class Rune:
             sub_attribute = random.choice(possible_sub_attributes)
             return sub_attribute
 
-        def get_fix_attr():
-            # vai ter atributo fixo? se sim .. se não...
-            return ""
+        def will_be_there_fix_attr():
+            return random.choice([True, True])
 
         #self.name:str = self.create_name()
         self.degree:int = get_degree()
@@ -80,7 +79,14 @@ class Rune:
         self.level = 0
         self.main_attr = MainAttribute(self.slot)
         possible_sub_attributes = get_possible_sub_attributes(self.slot)
-        self.sub_attr_1 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.main_attr.name))
+        
+        if will_be_there_fix_attr():
+            self.fix_attr = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.main_attr.name))
+            self.sub_attr_1 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.fix_attr.name))
+        else:
+            self.fix_attr = None
+            self.sub_attr_1 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.main_attr.name))
+        
         self.sub_attr_2 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.sub_attr_1.name))
         self.sub_attr_3 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.sub_attr_2.name))
         self.sub_attr_4 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.sub_attr_3.name))
@@ -89,6 +95,7 @@ class Rune:
         print(
             f"Name: +{self.level} Rune {self.set} ({self.slot})\n",
             f"Main Attr: {self.main_attr.print_()}\n",
+            f"Fix: {self.fix_attr.print_()}\n" if self.fix_attr else "",
             f"Sub 1: {self.sub_attr_1.print_()}\n",
             f"Sub 2: {self.sub_attr_2.print_()}\n",
             f"Sub 3: {self.sub_attr_3.print_()}\n",
