@@ -1,9 +1,8 @@
 import random
 import json
-class Attribute:
-    def __init__(self, slot:int, type_:str, sub_attribute=None, degree=6):
+class MainAttribute:
+    def __init__(self, slot:int, degree=6):
         """
-        tipe_: "main", "sub" or "fix"
         slot: slot's number, 1-6
         degree: number of stars, 1-6
         """
@@ -20,9 +19,16 @@ class Attribute:
                 category = random.choice( slots[slot_str][name] )
                 return name + category
 
-        def get_value_from_json(degree):
-            return degree
+        def get_value_from_json(degree, name):
+            with open('Rune\\main_attr_values.json', 'r', encoding='utf-8') as archive:
+                degrees = json.load(archive)
+                degree_str = "degree"+str(degree)
+                attribute = degrees[degree_str][name]
 
-        self.type_ = type_
-        self.name = get_main_attr_from_json(slot) if type_ == "main" else sub_attribute
-        self.value = get_value_from_json(degree)
+                return attribute["init"]
+
+        self.name = get_main_attr_from_json(slot)
+        self.value = get_value_from_json(degree, self.name)
+
+    def print_(self):
+        return f"{self.name}{self.value}"

@@ -1,7 +1,8 @@
 import random
 import json
 
-from attribute import Attribute
+from main_attribute import MainAttribute
+from sub_attribute import SubAttribute
 
 class Rune:
     def __init__(self):
@@ -77,17 +78,17 @@ class Rune:
         self.category:str = get_category()
         self.set:str = get_set()
         self.level = 0
-        self.main_attr = Attribute(self.slot, "main")
+        self.main_attr = MainAttribute(self.slot)
         possible_sub_attributes = get_possible_sub_attributes(self.slot)
-        self.sub_attr_1 = Attribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.main_attr.name))
-        self.sub_attr_2 = Attribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.sub_attr_1.name))
-        self.sub_attr_3 = Attribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.sub_attr_2.name))
-        self.sub_attr_4 = Attribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.sub_attr_3.name))
+        self.sub_attr_1 = SubAttribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.main_attr.name))
+        self.sub_attr_2 = SubAttribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.sub_attr_1.name))
+        self.sub_attr_3 = SubAttribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.sub_attr_2.name))
+        self.sub_attr_4 = SubAttribute(self.slot, "sub", get_sub_attribute(possible_sub_attributes, self.sub_attr_3.name))
 
     def printar(self):
         print(
             f"Name: +{self.level} Rune {self.set} ({self.slot})\n",
-            f"Main Attr: {self.main_attr.name}\n",
+            f"Main Attr: {self.main_attr.print_()}\n",
             f"Sub 1: {self.sub_attr_1.name}\n",
             f"Sub 2: {self.sub_attr_2.name}\n",
             f"Sub 3: {self.sub_attr_3.name}\n",
