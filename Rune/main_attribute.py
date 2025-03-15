@@ -31,4 +31,11 @@ class MainAttribute:
         self.value = get_value_from_json(degree, self.name)
 
     def print_(self):
+        if "%" in self.name:
+            name = self.name.split("%")[0]
+            return f"{name} +{self.value}%"
+        else:
+            name = self.name.split("+")[0]
+            return f"{name} +{self.value}"
+
         return f"{self.name}{self.value}"
