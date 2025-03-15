@@ -53,7 +53,7 @@
         "CRI Rate%": {
             "init": 7,
             "increase": 3,
-            "max": 28
+            "max": 58
         }
     }
 }

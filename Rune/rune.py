@@ -81,15 +81,31 @@ class Rune:
         possible_sub_attributes = get_possible_sub_attributes(self.slot)
         
         if will_be_there_fix_attr():
-            self.fix_attr = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.main_attr.name))
-            self.sub_attr_1 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.fix_attr.name))
+            self.fix_attr = SubAttribute(get_sub_attribute(possible_sub_attributes, self.main_attr.name))
+            self.sub_attr_1 = SubAttribute(get_sub_attribute(possible_sub_attributes, self.fix_attr.name))
         else:
             self.fix_attr = None
-            self.sub_attr_1 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.main_attr.name))
+            self.sub_attr_1 = SubAttribute(get_sub_attribute(possible_sub_attributes, self.main_attr.name))
         
-        self.sub_attr_2 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.sub_attr_1.name))
-        self.sub_attr_3 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.sub_attr_2.name))
-        self.sub_attr_4 = SubAttribute(self.slot, get_sub_attribute(possible_sub_attributes, self.sub_attr_3.name))
+        self.sub_attr_2 = SubAttribute(get_sub_attribute(possible_sub_attributes, self.sub_attr_1.name))
+        self.sub_attr_3 = SubAttribute(get_sub_attribute(possible_sub_attributes, self.sub_attr_2.name))
+        self.sub_attr_4 = SubAttribute(get_sub_attribute(possible_sub_attributes, self.sub_attr_3.name))
+
+
+    def power_up_one_level(self):
+        self.level += 1
+        self.main_attr.power_up(self.level)
+        if self.level in [3, 6, 9, 12]:
+            chosen_sub = random.choice( [self.sub_attr_1, self.sub_attr_2, self.sub_attr_3, self.sub_attr_4] )
+            chosen_sub.power_up()
+
+
+    def power_up(self, new_level):
+        upgrades = new_level - self.level
+        for _ in range(upgrades):
+            self.power_up_one_level()
+
+        
 
     def printar(self):
         print(
@@ -102,6 +118,6 @@ class Rune:
             f"Sub 4: {self.sub_attr_4.print_()}",
         )
 
-runa = Rune()
-
-runa.printar()
+rune = Rune()
+rune.power_up(15)
+rune.printar()
